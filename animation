@@ -1,0 +1,41 @@
+let userNumber;
+let greenCircles = [];
+let size = 10;
+const growth = 5;
+
+function setup() {
+  createCanvas(400, 400);
+  noFill();
+  userInput = prompt("Enter a number:");
+}
+
+//when user enters the number 5 then it will display an expanding green circle to represent a correct answer, but when user enters something other than 5 then it will display an expanding red hexagon (used as such to display a stop sign)
+
+function draw() {
+  background(220);
+  
+// user input is here turned into either a green expanding circle or else a red expanding hexagon. i asked chatGPT questions for help and examples to learn a bit more however created the code myself without GPT input
+  
+  if (userInput === '5' && greenCircles.length < 5) {
+    greenCircles.push(size);
+    size += growth;
+  } else if (greenCircles.length === 0) {
+    stroke(255, 0, 0);
+    beginShape();
+    for (let i = 0; i < 6; i++) {
+      let angle = TWO_PI / 6 * i;
+      let x = width / 2 + cos(angle) * size;
+      let y = height / 2 + sin(angle) * size;
+      vertex(x, y);
+    }
+    endShape(CLOSE);
+    size += growth;
+  }
+
+  
+  stroke(0, 255, 0);
+  for (let i = 0; i < greenCircles.length; i++) {
+    ellipse(width / 2, height / 2, greenCircles[i]);
+    greenCircles[i] += growth;
+  }
+}
